@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the associated MedVOI manuscript."
+title: "MedVOI"
+version: 0.1.0
+authors:
+  - family-names: Li
+    given-names: Hongwei
+preferred-citation:
+  type: article
+  title: "Predicting patient-specific information value enables adaptive multimodal medical AI"
+  authors:
+    - family-names: Li
+      given-names: Hongwei
+  year: 2026

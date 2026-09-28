@@ -1,0 +1,47 @@
+name: autopet
+output_dir: outputs/autopet
+
+dataset:
+  manifest: data/manifests/autopet.csv
+  task: segmentation
+  sources: [pet, ct]
+  label_col: label
+  target_shape: [128, 128, 128]
+  normalize: true
+
+model:
+  task_model: seg3d
+  out_channels: 1
+  base_channels: 24
+
+training:
+  seed: 2026
+  device: cuda
+  batch_size: 2
+  num_workers: 4
+  lr: 0.0002
+  weight_decay: 0.00001
+  epochs: 150
+  early_stopping_patience: 20
+  dice_weight: 0.5
+  modality_dropout: {"1": 0.70, "2": 0.30}
+
+crossfit: {folds: 5, epochs: 100}
+value_model:
+  candidate_dim: 16
+  hidden: [128, 64]
+  dropout: 0.10
+  lr: 0.001
+  weight_decay: 0.00001
+  batch_size: 256
+  epochs: 100
+  ranking_weight: 0.50
+  ranking_tolerance: 0.01
+policy:
+  initial_subset: [1, 0]
+  tau: 0.01
+  beta: 0.0
+  lambda_cost: 0.0
+  costs: [1.0, 1.0]
+baselines: {direct_epochs: 100, direct_lr: 0.001, rl_epochs: 30, rl_lr: 0.001, rl_gamma: 0.95}
+evaluation: {gain_bins: 8, bootstrap_resamples: 10000}
